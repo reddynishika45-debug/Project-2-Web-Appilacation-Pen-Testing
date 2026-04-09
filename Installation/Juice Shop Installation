@@ -1,1 +1,168 @@
+# 🧪 OWASP Juice Shop Setup (Kali Linux)
+
+This guide explains how to install and run **OWASP Juice Shop** on Kali Linux for security testing.
+
+---
+
+# ⚙️ Step 1: Install Node.js
+
+Update the system and install Node.js and npm.
+
+```
+sudo apt update
+sudo apt install nodejs npm -y
+```
+
+---
+
+# ✅ Step 2: Verify Installation
+
+Check whether Node.js and npm are installed correctly.
+
+```
+node -v
+npm -v
+```
+
+If both commands return version numbers, the installation is successful.
+
+---
+
+# 🚀 Step 3: Run OWASP Juice Shop
+
+Run the application using:
+
+```
+npx juice-shop
+```
+
+After running the command, open the application in your browser:
+
+```
+http://localhost:3000
+```
+
+---
+
+# ❌ Fix Common npm Error
+
+Sometimes the following error appears:
+
+```
+No versions available for juice-shop
+```
+
+To fix it, run:
+
+```
+npm cache clean --force
+npm config set registry https://registry.npmjs.org/
+npx @owasp/juice-shop
+```
+
+---
+
+# 🐳 Install Docker (Kali Linux)
+
+Docker can also be used to run Juice Shop in a container.
+
+Install Docker:
+
+```
+sudo apt update
+sudo apt install docker.io -y
+```
+
+Start and enable Docker service:
+
+```
+sudo systemctl start docker
+sudo systemctl enable docker
+```
+
+Verify installation:
+
+```
+docker --version
+```
+
+---
+
+# 🐳 Install Podman (Alternative to Docker)
+
+Podman is another container tool that can run Juice Shop.
+
+Install Podman:
+
+```
+sudo apt update
+sudo apt install podman -y
+```
+
+Verify installation:
+
+```
+podman --version
+```
+
+---
+
+# 🐳 Run OWASP Juice Shop using Docker or Podman
+
+❌ Common mistake:
+
+```
+docket.io/bkimminich/juice-shop
+```
+
+✅ Correct command:
+
+```
+podman run -d -p 3000:3000 docker.io/bkimminich/juice-shop
+```
+
+If port **3000 is already in use**, run:
+
+```
+podman run -d -p 4000:3000 docker.io/bkimminich/juice-shop
+```
+
+---
+
+# 📦 Check Running Containers
+
+```
+podman ps
+```
+
+---
+
+# 🌐 Access Juice Shop in Browser
+
+Open the application in a web browser:
+
+```
+http://localhost:3000
+```
+
+or
+
+```
+http://localhost:4000
+```
+
+---
+
+# ⚠️ Important Notes
+
+* Perform testing **only in controlled environments**
+* Do **NOT test real websites**
+* Use intentionally vulnerable applications like Juice Shop for learning
+* Capture screenshots for documentation and reporting
+
+---
+
+# 🎯 Outcome
+
+After completing these steps, the **OWASP Juice Shop application will run locally**, allowing penetration testing and vulnerability assessment exercises.
 
