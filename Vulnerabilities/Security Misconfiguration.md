@@ -345,8 +345,3 @@ Implementing proper **secure configuration practices, error handling mechanisms,
 | Confidence      | High   |
 
 ---
-This **consistency is very important for a professional VAPT report on GitHub**.
-
----
-
-If you want, I can also **give the mentor insight and rating for this Security Misconfiguration report** (just like I did for your other vulnerabilities) so you know **how strong it is for your internship project.**
