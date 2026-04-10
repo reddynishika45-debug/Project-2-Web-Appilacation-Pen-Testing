@@ -1,6 +1,3 @@
----
-
-# 🛡️ SQL Injection Vulnerability Report (Enhanced Version)
 
 ---
 
