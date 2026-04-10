@@ -5,7 +5,6 @@
 ## 📁 Project
 
 **OWASP Juice Shop – Security Assessment**
-
 ---
 
 ## 📝 Vulnerability Title
