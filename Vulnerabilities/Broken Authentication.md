@@ -1,10 +1,8 @@
----
 # 🛡️ Broken Authentication Vulnerability Report (CVSS Scored)
 
 ## 📁 Project
 
 **OWASP Juice Shop – Security Assessment**
----
 
 ## 📝 Vulnerability Title
 
