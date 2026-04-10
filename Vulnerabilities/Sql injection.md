@@ -278,6 +278,8 @@ The application demonstrates a **High severity SQL Injection vulnerability** con
 Immediate remediation is required to prevent data exposure and exploitation.
 
 ---
+📈 Final Assessment
+
 | Category               | Rating      |
 | ---------------------- | ----------- |
 | Reflected XSS Severity | HIGH        |
