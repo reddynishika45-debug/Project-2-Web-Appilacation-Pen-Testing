@@ -1,5 +1,3 @@
----
-
 # 🛡️ Sensitive Data Exposure Vulnerability Report (CVSS Scored)
 
 ## 📁 Project
