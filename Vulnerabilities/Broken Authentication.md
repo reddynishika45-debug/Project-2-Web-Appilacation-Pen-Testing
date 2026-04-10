@@ -317,7 +317,6 @@ Security incidents could reduce user trust and damage the organization's reputat
   [https://portswigger.net/web-security/authentication](https://portswigger.net/web-security/authentication)
 
 ---
-
 # 🏁 Conclusion
 
 The application is vulnerable to **Broken Authentication** due to the absence of **brute-force protection mechanisms** and **improper session invalidation**.
@@ -327,7 +326,6 @@ These issues allow attackers to perform **automated credential attacks** and **r
 Implementing stronger authentication controls and secure session management practices is essential to mitigate these vulnerabilities.
 
 ---
-
 # 📈 Final Assessment
 
 | Category        | Rating |
