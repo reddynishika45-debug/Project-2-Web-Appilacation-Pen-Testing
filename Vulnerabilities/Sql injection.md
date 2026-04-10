@@ -280,14 +280,13 @@ Immediate remediation is required to prevent data exposure and exploitation.
 ---
 📈 Final Assessment
 
-| Category               | Rating      |
-| ---------------------- | ----------- |
-| Reflected XSS Severity | HIGH        |
-| Stored HTML Injection  | MEDIUM      |
-| CVSS Score             | 8.2         |
-| Exploitability         | Easy        |
-| Business Impact        | Medium–High |
-| Confidence             | High        |
+| Category        | Rating |
+| --------------- | ------ |
+| Severity        | HIGH   |
+| CVSS Score      | 7.5    |
+| Exploitability  | Easy   |
+| Business Impact | High   |
+| Confidence      | High   |
 
 ---
 
