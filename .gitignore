@@ -1,0 +1,95 @@
+# ----------------------------
+# OS Files
+# ----------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ----------------------------
+# Environment Variables
+# ----------------------------
+.env
+.env.*
+*.env
+
+# ----------------------------
+# Python Cache Files
+# ----------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ----------------------------
+# Virtual Environments
+# ----------------------------
+venv/
+env/
+ENV/
+.venv/
+env.bak/
+venv.bak/
+
+# ----------------------------
+# Python Build / Distribution
+# ----------------------------
+build/
+dist/
+.eggs/
+*.egg-info/
+*.egg
+
+# ----------------------------
+# Logs
+# ----------------------------
+*.log
+logs/
+
+# ----------------------------
+# Test / Coverage Reports
+# ----------------------------
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+
+# ----------------------------
+# Jupyter Notebook
+# ----------------------------
+.ipynb_checkpoints/
+
+# ----------------------------
+# Editor / IDE Settings
+# ----------------------------
+.vscode/
+.idea/
+.spyderproject
+.spyproject
+.ropeproject
+
+# ----------------------------
+# Temporary Files
+# ----------------------------
+*.tmp
+*.swp
+*.swo
+*~
+
+# ----------------------------
+# Database Files
+# ----------------------------
+*.sqlite3
+*.db
+
+# ----------------------------
+# Security / Sensitive Files
+# ----------------------------
+*.pem
+*.key
+*.crt
+
+# ----------------------------
+# Project Specific (Optional)
+# ----------------------------
+# Ignore local testing artifacts or temporary scans
+scans/tmp/
+reports/draft/
