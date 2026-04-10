@@ -278,5 +278,14 @@ The application demonstrates a **High severity SQL Injection vulnerability** con
 Immediate remediation is required to prevent data exposure and exploitation.
 
 ---
+| Category               | Rating      |
+| ---------------------- | ----------- |
+| Reflected XSS Severity | HIGH        |
+| Stored HTML Injection  | MEDIUM      |
+| CVSS Score             | 8.2         |
+| Exploitability         | Easy        |
+| Business Impact        | Medium–High |
+| Confidence             | High        |
 
+---
 
