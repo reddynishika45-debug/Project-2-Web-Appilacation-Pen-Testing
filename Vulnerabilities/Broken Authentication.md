@@ -1,5 +1,4 @@
 ---
-
 # 🛡️ Broken Authentication Vulnerability Report (CVSS Scored)
 
 ## 📁 Project
