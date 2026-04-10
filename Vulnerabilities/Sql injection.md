@@ -1,9 +1,22 @@
+---
 
-# 1️⃣ SQL Injection Vulnerability Report
+# 🛡️ SQL Injection Vulnerability Report (Enhanced Version)
 
-## 📝 Vulnerability Title
+---
 
-**SQL Injection (Error-Based & Input Validation Weakness)**
+# 1️⃣ SQL Injection Vulnerability
+
+**Severity:** Critical
+**CVSS Score:** 9.8
+**CWE:** CWE-89 — Improper Neutralization of Special Elements used in an SQL Command
+
+---
+
+## 📌 Summary
+
+A SQL Injection vulnerability was identified in the application’s product search functionality. Improper handling of user input allows SQL control characters to influence backend query behavior, leading to database error disclosure and potential query manipulation.
+
+However, further testing indicates that certain payloads are being partially blocked or rejected, suggesting the presence of filtering or security controls rather than full exploitation prevention.
 
 ---
 
@@ -13,37 +26,33 @@ OWASP Juice Shop
 
 ---
 
-## 🧰 Tool Used
+## 🧰 Tools Used
 
 * Burp Suite
+* Manual Testing
 
 ---
 
 ## 🧪 Testing Methodology
 
-Testing was performed manually using **Burp Suite** by intercepting HTTP requests and injecting SQL payloads into user-controlled input fields.
+The vulnerability was analyzed using **Burp Suite Proxy and Repeater** by intercepting and modifying HTTP requests.
 
-The application responses were analyzed to determine whether user input was properly validated before being processed by the database.
+User input in the search parameter was manipulated with SQL payloads to observe:
 
----
-
-## 📌 Description
-
-SQL Injection occurs when **user input is improperly validated and directly included in SQL queries**, allowing attackers to manipulate database operations.
-
-During testing, the **search functionality** was found to process user input without proper sanitization.
-
-Multiple SQL payloads were injected into the search parameter, which resulted in **database error responses and unexpected query behavior**, confirming the presence of a SQL Injection vulnerability.
+* Backend query behavior
+* Error responses
+* Input validation mechanisms
+* Boolean condition handling
 
 ---
 
-## 🔍 Vulnerable Endpoint
+## 📌 Vulnerable Endpoint
 
 ```
 /rest/products/search?q=
 ```
 
-**Parameter**
+**Parameter:**
 
 ```
 q
@@ -51,29 +60,36 @@ q
 
 ---
 
+## 📌 Description
+
+SQL Injection occurs when user input is directly embedded into SQL queries without proper sanitization or parameterization.
+
+During testing, the search functionality showed inconsistent behavior when processing SQL-related input. Certain payloads triggered database errors, confirming partial SQL injection behavior.
+
+However, boolean-based injection attempts were blocked or rejected, indicating the presence of filtering or request validation mechanisms.
+
+---
+
 ## 🚀 Steps to Reproduce
 
 ### Step 1 — Intercept Request
 
-1. Open the application.
-2. Perform a product search.
-3. Intercept the request using Burp Suite Proxy.
-4. Send the intercepted request to **Burp Repeater**.
+1. Open application
+2. Perform product search
+3. Capture request using Burp Suite Proxy
+4. Send request to Burp Repeater
 
 ---
 
-### Step 2 — Test SQL Payloads
+### Step 2 — Error-Based Injection Test
 
-#### Payload 1 — Error-Based Injection
+#### Payload:
 
 ```
 apple'
 ```
 
-**Result**
-
-* Application returned a **database error**.
-* Example response:
+**Response:**
 
 ```
 SQLite error: incomplete input
@@ -81,135 +97,217 @@ SQLite error: incomplete input
 
 ---
 
-#### Payload 2 — SQL Comment Injection
+### Step 3 — Boolean-Based Injection Test
+
+#### Payload (TRUE condition):
+
+```
+apple' OR '1'='1
+```
+
+#### Payload (FALSE condition):
+
+```
+apple' OR '1'='2
+```
+
+**Response for both:**
+
+```
+HTTP 400 Bad Request
+```
+
+---
+
+## 🚨 🧪 Bypass Attempts & Observations (NEW – IMPORTANT)
+
+To further validate SQL injection behavior, multiple bypass techniques were tested.
+
+### 🔹 1. Boolean-Based Conditions
+
+Payloads tested:
+
+```
+apple' OR '1'='1
+apple' OR '1'='2
+```
+
+**Observation:**
+Both payloads resulted in:
+
+```
+400 Bad Request
+```
+
+✔ Indicates request rejection before query execution OR strict input filtering.
+
+---
+
+### 🔹 2. SQL Comment-Based Injection
 
 ```
 apple--
 ```
 
-**Result**
-
-* Request processed successfully.
-* Server returned:
+**Result:**
 
 ```
-HTTP/1.1 200 OK
+200 OK
 ```
+
+✔ Suggests partial acceptance of SQL special characters without immediate blocking.
 
 ---
 
-#### Payload 3 — Multiple Quote Injection
+### 🔹 3. Quote Escaping Variants
 
 ```
 apple''
 ```
 
-**Result**
-
-* Request accepted by the server.
-* Server returned:
+**Result:**
 
 ```
-HTTP/1.1 200 OK
+200 OK
 ```
 
-* No input validation was applied.
+✔ Indicates inconsistent input handling.
 
 ---
 
-## 📸 Proof of Concept
+### 🔹 4. Error-Based Injection
 
-Evidence collected during testing includes:
+```
+apple'
+```
 
-* Screenshot showing **database error after injecting `'`**
-* Screenshot showing **successful request using SQL comment operator `--`**
-* Screenshot showing **application accepting multiple quotes `''`**
+**Result:**
 
-These observations confirm **improper input handling and lack of input sanitization**.
+```
+SQLite error: incomplete input
+```
+
+✔ Confirms backend SQL parsing is influenced by user input.
+
+---
+
+### 📌 Key Observation Summary
+
+* Error-based SQL injection behavior is observable
+* Boolean-based payloads are blocked or rejected
+* Inconsistent filtering suggests partial mitigation rather than complete protection
+* Backend likely applies input filtering or request validation mechanisms
+
+---
+
+## 📸 Proof of Concept (PoC)
+
+The vulnerability was confirmed by injecting SQL control characters into the search parameter.
+
+Example payload:
+
+```
+apple'
+```
+
+This resulted in the following database error:
+
+```
+SQLite error: incomplete input
+```
+
+Additionally, comment-based and quote-based payloads altered response behavior, confirming SQL query interaction with user input.
+
+---
+
+## 📸 Evidence
+
+Proof-of-concept screenshots demonstrating:
+
+* SQL error responses
+* Burp Suite request interception
+* Payload testing results
+
+are stored in the project repository under the evidence directory.
 
 ---
 
 ## ⚠️ Impact
 
-If exploited, SQL Injection may allow attackers to:
+If fully exploitable, SQL Injection may allow attackers to:
 
-* Retrieve sensitive data from the database
+* Access sensitive database records
 * Bypass authentication mechanisms
-* Modify or delete application data
-* Execute unauthorized database queries
-* Gain unauthorized access to internal system data
+* Modify or delete data
+* Execute unauthorized SQL queries
+* Compromise backend systems
 
 ---
 
 ## 💼 Business Impact
 
-Successful exploitation of SQL Injection could result in:
+Exploitation may lead to:
 
-* Exposure of **customer data**
-* Unauthorized modification of **application records**
-* Potential **financial loss**
-* **Reputation damage** for the organization
-* Increased risk of **full database compromise**
+* Exposure of customer and product data
+* Loss of data integrity
+* Financial loss due to data breaches
+* Regulatory compliance violations
+* Reputation damage
 
 ---
 
 ## 🎯 Attack Scenario
 
-An attacker could manipulate the search functionality by injecting SQL syntax into the `q` parameter of the endpoint:
+An attacker intercepts the search request and manipulates the `q` parameter with SQL payloads.
 
-```
-/rest/products/search
-```
+Depending on backend filtering strength, the attacker may:
 
-During testing, payloads such as:
+* Trigger database errors (confirmed)
+* Attempt boolean-based inference (currently blocked)
+* Explore further bypass techniques
 
-```
-apple'
---
-apple''
-```
-
-caused changes in query behavior and generated database errors.
-
-A skilled attacker could craft more advanced payloads to extract sensitive database information, bypass authentication mechanisms, or manipulate stored data.
+This indicates a potential attack surface that may be exploitable under different input conditions or encoding variations.
 
 ---
 
-## 📊 Severity
+## 📊 Severity Assessment
 
-**Severity Level:** High
+**Severity:** Critical
 
-**CVSS v3.1 Score:** 9.8 (Critical)
-
-**CVSS Vector**
+**CVSS v3.1 Score:** 9.8
 
 ```
 AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
 ```
 
-This vulnerability is considered critical because it allows attackers to interact directly with the backend database through malicious input.
-
 ---
 
 ## 🛠️ Recommendations
 
-To mitigate SQL Injection vulnerabilities, the following measures are recommended:
-
-* Use **prepared statements / parameterized queries**
-* Implement **strict input validation and sanitization**
-* Avoid exposing **database error messages**
-* Use **ORM frameworks** for safer database interaction
-* Apply the **principle of least privilege** for database accounts
-* Implement **Web Application Firewall (WAF)** protections
+* Use **parameterized queries (prepared statements)**
+* Implement strict **input validation & sanitization**
+* Avoid exposing raw database errors
+* Apply **ORM frameworks**
+* Use least privilege database accounts
+* Strengthen WAF rules without blocking legitimate inputs incorrectly
+* Implement centralized secure query handling layer
 
 ---
 
 ## 🏁 Conclusion
 
-The application is vulnerable to **SQL Injection** due to improper handling of user input in the search functionality.
+The application shows **partial SQL injection behavior**, primarily through error-based responses. However, boolean-based payloads are currently blocked or filtered, indicating partial mitigation.
 
-The presence of database error messages and acceptance of SQL control characters confirms **insufficient input validation**, making the application susceptible to injection attacks.
-
-Proper input validation, secure query handling, and improved error management are required to mitigate this vulnerability.
+This suggests the application is **not fully secure against SQL injection**, but instead relies on inconsistent input filtering mechanisms that may still be bypassed.
 
 ---
+
+## 📚 References
+
+* OWASP Top 10
+* CWE-89: SQL Injection
+* [https://owasp.org/www-project-top-ten/](https://owasp.org/www-project-top-ten/)
+* [https://cwe.mitre.org/data/definitions/89.html](https://cwe.mitre.org/data/definitions/89.html)
+
+---
+
