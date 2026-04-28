@@ -1,4 +1,3 @@
----
 # 🛡️ Insecure Design Vulnerability Report (CVSS Scored)
 
 ## 📁 Project
