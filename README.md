@@ -61,28 +61,34 @@ The assessment included reconnaissance, vulnerability discovery, exploitation, a
 
 The following vulnerabilities were identified during the assessment:
 
-* SQL Injection
+* SQL Injection (SQLi)
 * Cross-Site Scripting (XSS)
 * Broken Authentication
 * Broken Access Control
+* Sensitive Data Exposure
 * Security Misconfiguration
 * Vulnerable and Outdated Components
 * Security Logging and Monitoring Failures
-
+* Insecure Design
+* Cross-Site Request Forgery (CSRF)
+* Server-Side Request Forgery (SSRF)
 ---
 
 ## 📊 Vulnerability Severity Summary
 
-| Vulnerability                          | Severity  |
-| -------------------------------------- | --------- |
-| SQL Injection                          | 🔴 High   |
-| Cross-Site Scripting (XSS)             | 🔴 High   |
-| Broken Authentication                  | 🔴 High   |
-| Broken Access Control                  | 🔴 High   |
-| Security Misconfiguration              | 🟡 Medium |
-| Vulnerable and Outdated Components     | 🟡 Medium |
-| Security Logging & Monitoring Failures | 🟡 Medium |
-
+| Vulnerability | Severity |
+|---|---|
+| SQL Injection (SQLi) | 🔴 High |
+| Cross-Site Scripting (XSS) | 🔴 High |
+| Broken Authentication | 🔴 High |
+| Broken Access Control | 🔴 High |
+| Sensitive Data Exposure | 🔴 High |
+| Security Misconfiguration | 🟡 Medium |
+| Vulnerable and Outdated Components | 🟡 Medium |
+| Security Logging and Monitoring Failures | 🟡 Medium |
+| Insecure Design | 🔴 High |
+| Cross-Site Request Forgery (CSRF) | 🟡 Medium |
+| Server-Side Request Forgery (SSRF) | 🔴 High |
 ---
 
 ## 🧪 Example Attack Scenarios
