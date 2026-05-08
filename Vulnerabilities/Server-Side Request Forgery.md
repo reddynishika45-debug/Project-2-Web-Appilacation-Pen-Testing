@@ -1,173 +1,242 @@
 
-# Server-Side Request Forgery (SSRF) Vulnerability Report
+# Server-Side Request Forgery (SSRF) Report
 
----
-
-# 📝 Vulnerability Title
+## 📝 Vulnerability Title
 
 Server-Side Request Forgery (SSRF)
 
 ---
 
-# 🎯 Application
+## 🎯 Application
 
 OWASP Juice Shop
 
 ---
 
-# 🧪 Testing Methodology
+## 🧪 Testing Methodology
 
-The application workflow and internal request handling mechanisms were analyzed manually using Burp Suite and browser-based interaction. Multiple application functionalities related to order processing, payment handling, address management, and administrative information exposure were reviewed to identify insecure server-side request behavior and unintended exposure of internal resources.
+Server-side request handling and internal application workflows were analyzed manually using Burp Suite and browser interaction. Various shopping, checkout, payment, and order-processing functionalities were tested to identify improper exposure of internal resources and sensitive workflow information.
 
 ---
 
-# 📌 Description
+## 📌 Description
 
-Server-Side Request Forgery (SSRF) occurs when an application fetches remote resources or processes internal requests without proper validation. Attackers may exploit such behavior to access internal systems, sensitive resources, or unintended application functionality.
+Server-Side Request Forgery (SSRF) vulnerabilities occur when an application improperly handles server-side requests and exposes internal resources or backend workflow information.
 
-During testing, multiple sensitive application components and internal resources were exposed throughout the order and payment workflow. The application revealed administrative information, internal order details, payment-related data, delivery information, and address-related information during request processing and order handling.
+During testing, the application exposed multiple sensitive internal details during the shopping and checkout workflow. Sensitive information such as administrative account details, delivery information, payment methods, order summaries, and pricing details were visible throughout the application workflow.
 
-The application workflow exposed:
+The application revealed:
 
 - Administrative account information
-- Internal order summary details
-- Payment processing information
+- Product pricing and charges
 - Address and delivery details
-- Product and pricing information
-- Backend workflow responses
+- Payment method information
+- Internal order processing workflow
+- Order summary details
 
-These findings indicate insufficient validation and improper exposure of internal application resources during server-side processing.
-
----
-
-# 🚀 Steps to Reproduce
-
-## Step 1 — Access Login and Shopping Workflow
-
-1. Open OWASP Juice Shop.
-2. Login using available credentials.
-3. Browse products and add items to the basket.
-
-### Observation
-
-The application exposes detailed product pricing and workflow information during the purchase process.
+Improper exposure of internal application workflows may assist attackers in understanding backend processing and identifying additional attack vectors.
 
 ---
 
-## Step 2 — Review Delivery Information
+## 🚀 Steps to Reproduce
 
-1. Proceed to checkout.
-2. Navigate to the delivery section.
+### Step 1 — Login to the Application
+
+Login using valid application credentials.
 
 ### Observation
 
-The application reveals:
-
-- Delivery methods
-- Shipping charges
-- Internal order flow
-- Address-related information
+The application allowed access to shopping and checkout workflows containing sensitive internal information.
 
 ---
 
-## Step 3 — Analyze Payment Workflow
+### Step 2 — Add Products to Basket
 
-1. Continue to the payment section.
-2. Observe available payment methods and processing details.
+Browse available products and add items to the shopping basket.
 
 ### Observation
 
-The application exposes:
+The application exposed:
 
-- Payment modes
-- Payment-related identifiers
-- Internal payment workflow details
+- Product information
+- Item pricing
+- Basket details
+- Internal shopping workflow data
 
 ---
 
-## Step 4 — Review Order Summary
+### Step 3 — Analyze Delivery Workflow
 
-1. Continue to the order summary page.
-2. Inspect displayed information.
+Proceed to the delivery section during checkout.
 
 ### Observation
 
-The application reveals:
+The application displayed:
 
-- Administrative account information
-- Order details
+- Delivery address
+- Shipping methods
+- Delivery charges
+- Internal order-processing information
+
+---
+
+### Step 4 — Analyze Payment Workflow
+
+Continue to the payment section.
+
+### Observation
+
+The application exposed:
+
+- Payment methods
+- Card-related information
+- Administrative details
+- Internal payment workflow information
+
+---
+
+### Step 5 — Review Order Summary
+
+Proceed to the order summary page.
+
+### Observation
+
+The application revealed:
+
+- Administrative account details
 - Address information
 - Product pricing
 - Delivery charges
 - Payment information
-- Internal order processing details
+- Internal order summary data
 
 ---
 
-# 📸 Proof of Concept (PoC)
+## 📸 Proof of Concept
 
 Evidence collected during testing includes:
 
-- Exposure of administrative account details
-- Visible internal order summary information
-- Address and delivery information disclosure
-- Payment method exposure
-- Product pricing and order flow exposure
-- Backend workflow information disclosure
+- Exposure of administrative information
+- Visible address and payment details
+- Product pricing and order charges
+- Internal workflow and order-processing information
+- Sensitive checkout and order summary data
 
-Screenshots of these findings were captured during testing and stored in the project screenshots folder.
+Screenshots were captured during testing and stored in the screenshots folder.
 
 ---
 
-# ⚠️ Impact
+## ⚠ Impact
 
-If internal request handling and server-side processing are not properly secured, attackers may gain access to sensitive application data and internal resources.
+Improper exposure of backend workflow information may allow attackers to:
+
+- Gather sensitive administrative information
+- Understand internal application logic
+- Identify hidden resources or endpoints
+- Analyze payment and order workflows
+- Perform further attacks using exposed data
 
 Potential impacts include:
 
-- Exposure of sensitive administrative information
-- Leakage of internal workflow logic
-- Information disclosure aiding further attacks
-- Exposure of payment and delivery information
-- Increased attack surface for attackers
-- Potential access to internal services or resources
+- Information disclosure
+- Increased attack surface
+- Exposure of sensitive payment and address information
+- Assistance in further exploitation attempts
 
 ---
 
-# 🎯 Attack Scenario
+## 🎯 Attack Scenario
 
-An attacker could interact with application workflows and analyze exposed server-side responses to gather sensitive information about internal application processing. By leveraging improperly exposed order details, administrative information, and backend workflow responses, attackers may identify hidden endpoints, internal services, or sensitive resources for further exploitation.
+An attacker could analyze exposed checkout and payment workflows to gather information about internal application processing, payment handling, administrative details, and order-management mechanisms.
 
----
-
-# 📊 Severity
-
-**Medium Severity**
-
-Although direct server compromise was not achieved, the exposure of sensitive internal workflow information and improper handling of server-side requests increases the risk of information disclosure and further exploitation.
+This information may help attackers identify backend services, hidden endpoints, or additional vulnerabilities for further exploitation.
 
 ---
 
-# 🛠 Recommendations
+## 🌐 Attack Vector
 
-To mitigate SSRF and related information disclosure risks:
+The vulnerability can be exploited through normal application interaction during:
+
+- Shopping workflow
+- Checkout process
+- Delivery configuration
+- Payment processing
+- Order summary handling
+
+Attackers can observe sensitive internal information through exposed responses and improperly protected workflow data.
+
+---
+
+## 📊 CVSS Score
+
+### CVSS v3.1 Base Score: 6.5 (Medium)
+
+---
+
+## 📈 CVSS Breakdown
+
+| Metric | Value |
+|---|---|
+| Attack Vector (AV) | Network |
+| Attack Complexity (AC) | Low |
+| Privileges Required (PR) | Low |
+| User Interaction (UI) | Required |
+| Scope (S) | Unchanged |
+| Confidentiality (C) | High |
+| Integrity (I) | Low |
+| Availability (A) | None |
+
+---
+
+## 💼 Business Impact
+
+If exploited in a real-world application, this vulnerability could lead to:
+
+- Exposure of sensitive customer information
+- Leakage of payment and order-processing data
+- Disclosure of internal application workflows
+- Increased risk of targeted attacks
+- Loss of customer trust
+- Compliance and privacy risks
+
+The exposed information may assist attackers in conducting further exploitation attempts against the application infrastructure.
+
+---
+
+## 📊 Severity
+
+Medium because sensitive internal workflow information and backend processing details are exposed, increasing the risk of reconnaissance and further attacks.
+
+---
+
+## 🛠 Recommendations
+
+To improve security and reduce SSRF-related risks:
 
 - Validate and sanitize all server-side requests
 - Restrict access to internal resources
-- Avoid exposing internal application details in responses
-- Implement proper access control checks
-- Use allowlists for outbound server requests
-- Minimize exposure of payment and address information
-- Implement secure error handling
-- Monitor suspicious server-side request behavior
+- Avoid exposing backend workflow information
+- Limit sensitive data exposure in responses
+- Implement proper access-control checks
+- Use secure error-handling mechanisms
+- Monitor suspicious request activity
+- Restrict unnecessary information disclosure during checkout workflows
 
 ---
 
-# 🏁 Conclusion
+## 🏁 Conclusion
 
-The OWASP Juice Shop application exposes sensitive workflow information and internal processing details during shopping, payment, and order handling operations. Improper exposure of administrative information, payment details, and backend workflow responses increases the risk of information disclosure and further attacks.
+The OWASP Juice Shop application exposes sensitive internal workflow information during shopping, payment, and order-processing operations. Administrative details, payment information, address data, and backend workflow responses were accessible during testing.
 
-Proper request validation, secure access control, and minimal exposure of internal resources are essential to reduce SSRF-related risks.
+Proper request validation, secure access controls, and reduced information exposure are necessary to minimize SSRF-related risks and improve overall application security.
+
+---
+
+# ✅ Final Assessment
+
+The SSRF-related findings demonstrate that the application exposes excessive internal workflow information during normal application usage. While full internal server compromise was not achieved, the exposed administrative, payment, and order-processing details significantly increase the application's attack surface.
+
+The vulnerability highlights weaknesses in information handling, backend workflow exposure, and request validation mechanisms. Proper access control, secure response handling, and minimized information disclosure are necessary to strengthen the application's security posture.
 
 ---
 ```
